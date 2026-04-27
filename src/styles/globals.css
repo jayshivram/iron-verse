@@ -1,0 +1,384 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   Custom Fonts
+   ============================================ */
+
+@font-face {
+  font-family: 'KirimomiSwash';
+  src: url('/fonts/KirimomiSwash.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'KirimomiSwash';
+  src: url('/fonts/KirimomiSwaIt.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ============================================
+   Base
+   ============================================ */
+
+@layer base {
+  /* ══════════════════════════════════════════════════
+     Light mode (default) — warm parchment / cream
+     Ink scale is INVERTED vs dark: 950 = lightest
+     ══════════════════════════════════════════════════ */
+  :root {
+    color-scheme: light;
+
+    /* Ink — parchment to near-black */
+    --ink-950: 97% 0.006 60;
+    --ink-900: 93% 0.007 58;
+    --ink-800: 88% 0.008 55;
+    --ink-700: 82% 0.009 52;
+    --ink-600: 72% 0.010 50;
+    --ink-500: 58% 0.012 50;
+    --ink-400: 44% 0.013 50;
+    --ink-300: 32% 0.014 50;
+    --ink-200: 20% 0.015 48;
+    --ink-100: 11% 0.015 48;
+    --ink-50:   5% 0.012 48;
+
+    /* Amber — deeper/richer for contrast on light bg */
+    --amber-950: 96% 0.020 56;
+    --amber-900: 91% 0.040 55;
+    --amber-800: 84% 0.065 53;
+    --amber-700: 76% 0.095 51;
+    --amber-600: 64% 0.130 49;
+    --amber-500: 52% 0.155 48;
+    --amber-400: 59% 0.165 50;
+    --amber-300: 67% 0.155 52;
+    --amber-200: 76% 0.130 54;
+    --amber-100: 85% 0.090 56;
+    --amber-50:  93% 0.045 58;
+
+    /* Component accent vars */
+    --color-amber: oklch(52% 0.155 48);
+    --color-amber-400: oklch(59% 0.165 50);
+  }
+
+  /* ══════════════════════════════════════════════════
+     Dark mode — rich charcoal / ink
+     ══════════════════════════════════════════════════ */
+  .dark {
+    color-scheme: dark;
+
+    /* Ink — near-black to near-white */
+    --ink-950:  8% 0.012 48;
+    --ink-900: 11% 0.015 48;
+    --ink-800: 15% 0.018 48;
+    --ink-700: 20% 0.020 48;
+    --ink-600: 27% 0.020 48;
+    --ink-500: 38% 0.016 50;
+    --ink-400: 52% 0.014 52;
+    --ink-300: 65% 0.012 54;
+    --ink-200: 78% 0.010 56;
+    --ink-100: 90% 0.008 58;
+    --ink-50:  96% 0.005 60;
+
+    /* Amber */
+    --amber-950: 18% 0.050 40;
+    --amber-900: 26% 0.075 42;
+    --amber-800: 36% 0.100 44;
+    --amber-700: 46% 0.125 46;
+    --amber-600: 56% 0.145 47;
+    --amber-500: 65% 0.155 48;
+    --amber-400: 72% 0.165 50;
+    --amber-300: 79% 0.155 52;
+    --amber-200: 86% 0.130 54;
+    --amber-100: 92% 0.090 56;
+    --amber-50:  96% 0.045 58;
+
+    /* Component accent vars */
+    --color-amber: oklch(65% 0.155 48);
+    --color-amber-400: oklch(72% 0.165 50);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-ink-950 text-ink-100 font-body;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  ::selection {
+    @apply bg-amber-700 text-ink-50;
+  }
+
+  /* Focus visible only on keyboard navigation */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid oklch(65% 0.155 48);
+    outline-offset: 2px;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-ink-900;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-ink-600 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-amber-700;
+  }
+}
+
+/* ============================================
+   Typography
+   ============================================ */
+
+@layer components {
+  .font-display {
+    font-family: 'KirimomiSwash', Georgia, serif;
+  }
+
+  .text-display-xl {
+    @apply font-display text-5xl leading-none tracking-tight;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .text-display-lg {
+    @apply font-serif font-light text-4xl leading-tight;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .text-heading-xl {
+    @apply font-serif font-semibold text-3xl leading-snug;
+  }
+
+  .text-heading-lg {
+    @apply font-serif font-semibold text-2xl leading-snug;
+  }
+
+  .text-heading-md {
+    @apply font-serif font-medium text-xl leading-snug;
+  }
+
+  .text-poetry {
+    @apply font-serif italic text-lg leading-loose text-ink-200;
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+  }
+
+  /* ============================================
+     Cards & Surfaces
+     ============================================ */
+
+  .card {
+    @apply bg-ink-800 border border-ink-700 rounded-lg;
+  }
+
+  .card-hover {
+    @apply card transition-all duration-300 hover:border-ink-600 hover:shadow-ink;
+  }
+
+  /* ============================================
+     Buttons
+     ============================================ */
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 font-sans font-medium
+           transition-all duration-200
+           focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950
+           disabled:opacity-40 disabled:cursor-not-allowed
+           select-none;
+    --tw-ring-color: var(--color-amber);
+  }
+
+  .btn-primary {
+    @apply btn text-ink-950 px-5 py-2.5 rounded-md text-sm;
+    background-color: var(--color-amber);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-amber-400);
+  }
+
+  .btn-secondary {
+    @apply btn border border-ink-600 text-ink-100 px-5 py-2.5 rounded-md text-sm;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--color-amber);
+    color: var(--color-amber);
+  }
+
+  .btn-ghost {
+    @apply btn text-ink-300 hover:text-ink-100 hover:bg-ink-800
+           px-3 py-2 rounded-md text-sm;
+  }
+
+  .btn-danger {
+    @apply btn bg-red-700 text-white hover:bg-red-600
+           px-5 py-2.5 rounded-md text-sm;
+  }
+
+  /* ============================================
+     Forms
+     ============================================ */
+
+  .input {
+    @apply w-full bg-ink-800 border border-ink-600 text-ink-100 rounded-md
+           px-4 py-2.5 text-sm font-sans placeholder:text-ink-400
+           focus:outline-none transition-colors duration-200;
+  }
+
+  .input:focus {
+    border-color: var(--color-amber);
+  }
+
+  .textarea {
+    @apply input resize-none min-h-[120px];
+  }
+
+  .label {
+    @apply block text-sm font-sans font-medium text-ink-300 mb-1.5;
+  }
+
+  .field-error {
+    @apply text-xs text-red-400 mt-1;
+  }
+
+  /* ============================================
+     Dividers
+     ============================================ */
+
+  .divider {
+    @apply border-t border-ink-700;
+  }
+
+  .divider-amber {
+    @apply border-t border-amber-900;
+  }
+
+  /* ============================================
+     Badges / Tags
+     ============================================ */
+
+  .tag {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded text-xs font-sans font-medium
+           bg-ink-700 text-ink-300 border border-ink-600;
+  }
+
+  .tag-amber {
+    @apply tag bg-amber-950 text-amber-400 border-amber-900;
+  }
+
+  /* ============================================
+     Glassmorphism surfaces
+     ============================================ */
+
+  /* Fallback for browsers without backdrop-filter support */
+  @supports not (backdrop-filter: blur(1px)) {
+    .backdrop-blur-sm,
+    .backdrop-blur-md,
+    .backdrop-blur-lg {
+      background-color: oklch(var(--ink-900) / 0.97) !important;
+    }
+  }
+
+  /* ============================================
+     Skeleton loading
+     ============================================ */
+
+  .skeleton {
+    @apply bg-ink-800 rounded animate-pulse;
+    background: linear-gradient(
+      90deg,
+      oklch(var(--ink-800) / 1) 25%,
+      oklch(var(--ink-700) / 1) 50%,
+      oklch(var(--ink-800) / 1) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  /* ============================================
+     PDF viewer
+     ============================================ */
+
+  .react-pdf__Page__canvas {
+    @apply max-w-full h-auto !important;
+  }
+
+  .react-pdf__Page {
+    @apply flex justify-center;
+  }
+}
+
+/* ============================================
+   Animations (additional)
+   ============================================ */
+
+@layer utilities {
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+
+  .opacity-0-start {
+    opacity: 0;
+  }
+
+  /* Stagger children */
+  .stagger-children > * {
+    @apply opacity-0 animate-fade-up;
+  }
+  .stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+  .stagger-children > *:nth-child(2) { animation-delay: 80ms; }
+  .stagger-children > *:nth-child(3) { animation-delay: 160ms; }
+  .stagger-children > *:nth-child(4) { animation-delay: 240ms; }
+  .stagger-children > *:nth-child(5) { animation-delay: 320ms; }
+  .stagger-children > *:nth-child(6) { animation-delay: 400ms; }
+}
+
+/* ============================================
+   TipTap Editor
+   ============================================ */
+
+.ProseMirror {
+  @apply min-h-[400px] outline-none text-ink-100;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  @apply text-ink-500 pointer-events-none float-left h-0;
+}
+
+.ProseMirror h1 { @apply font-serif text-3xl font-semibold text-ink-50 mt-6 mb-3; }
+.ProseMirror h2 { @apply font-serif text-2xl font-semibold text-ink-50 mt-5 mb-2; }
+.ProseMirror h3 { @apply font-serif text-xl font-medium text-ink-100 mt-4 mb-2; }
+.ProseMirror p  { @apply text-ink-100 mb-3; }
+.ProseMirror blockquote { @apply border-l-2 pl-4 my-4 text-ink-300 italic; border-color: var(--color-amber); }
+.ProseMirror ul { @apply list-disc pl-5 mb-3 space-y-1; }
+.ProseMirror ol { @apply list-decimal pl-5 mb-3 space-y-1; }
+.ProseMirror a  { @apply underline; color: var(--color-amber); }
+.ProseMirror code { @apply text-amber-300 bg-ink-800 px-1 py-0.5 rounded text-sm; }
+.ProseMirror pre { @apply bg-ink-800 p-4 rounded-lg my-4 overflow-x-auto; }
+.ProseMirror pre code { @apply bg-transparent text-ink-100 p-0; }
