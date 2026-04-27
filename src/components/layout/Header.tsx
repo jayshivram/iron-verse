@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, BookOpen, Menu, X, User, LogOut } from 'lucide-react'
+import { Search, BookOpen, Menu, User, LogOut } from 'lucide-react'
 import { NAV_LINKS } from '@/utils/constants'
 import { useAuth } from '@/hooks/useAuth'
 import { MobileMenu } from './MobileMenu'
@@ -145,13 +145,16 @@ export function Header() {
 
               {/* Mobile menu toggle */}
               <button
-                onClick={() => setMobileOpen((o) => !o)}
-                aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+                onClick={() => setMobileOpen(true)}
+                aria-label="Open menu"
                 aria-expanded={mobileOpen}
-                className="md:hidden w-9 h-9 flex items-center justify-center rounded-md text-ink-400
-                           hover:text-ink-100 hover:bg-ink-800 transition-colors duration-150"
+                className={cn(
+                  'md:hidden w-9 h-9 flex items-center justify-center rounded-md text-ink-400',
+                  'hover:text-ink-100 hover:bg-ink-800 transition-colors duration-150',
+                  mobileOpen && 'opacity-0 pointer-events-none',
+                )}
               >
-                {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+                <Menu size={18} />
               </button>
             </div>
           </div>
