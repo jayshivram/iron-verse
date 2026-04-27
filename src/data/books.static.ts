@@ -20,7 +20,7 @@ export const STATIC_BOOKS: Book[] = [
     pdf_url: '/pdfs/You_and_the_Moon.pdf',
     pdf_size_bytes: 1565650,
     page_count: 58,
-    published_year: 2025,
+    published_year: 2022,
     publisher: 'Iron Heist',
     isbn: null,
     language: 'en',
@@ -32,8 +32,8 @@ export const STATIC_BOOKS: Book[] = [
     seo_title: 'You and the Moon — Poetry by Iron Heist',
     seo_description:
       'A cosmic love story told in verse. Free poetry book by Jay Shivram (Iron Heist).',
-    created_at: '2025-02-01T00:00:00Z',
-    updated_at: '2025-02-01T00:00:00Z',
+    created_at: '2022-06-01T00:00:00Z',
+    updated_at: '2022-06-01T00:00:00Z',
   },
   {
     id: 'garden-of-grief',
@@ -48,7 +48,7 @@ export const STATIC_BOOKS: Book[] = [
     pdf_url: '/pdfs/GARDEN_OF_GRIEF.pdf',
     pdf_size_bytes: 6939189,
     page_count: 103,
-    published_year: 2024,
+    published_year: 2025,
     publisher: 'Iron Heist',
     isbn: null,
     language: 'en',
@@ -60,8 +60,8 @@ export const STATIC_BOOKS: Book[] = [
     seo_title: 'Garden of Grief — Poetry by Iron Heist',
     seo_description:
       'A raw and honest record of grief, healing, and self-discovery. Free poetry collection by Jay Shivram (Iron Heist).',
-    created_at: '2024-10-01T00:00:00Z',
-    updated_at: '2024-10-01T00:00:00Z',
+    created_at: '2025-01-01T00:00:00Z',
+    updated_at: '2025-01-01T00:00:00Z',
   },
   {
     id: 'drunk-off-her',
@@ -76,7 +76,7 @@ export const STATIC_BOOKS: Book[] = [
     pdf_url: '/pdfs/DRUNK_OFF_HER.pdf',
     pdf_size_bytes: 1095079,
     page_count: 27,
-    published_year: 2024,
+    published_year: 2022,
     publisher: 'Iron Heist',
     isbn: null,
     language: 'en',
@@ -88,8 +88,8 @@ export const STATIC_BOOKS: Book[] = [
     seo_title: 'Drunk Off Her — Poetry by Iron Heist',
     seo_description:
       'A 27-poem descent into obsession and the particular madness of loving someone just out of reach.',
-    created_at: '2024-07-01T00:00:00Z',
-    updated_at: '2024-07-01T00:00:00Z',
+    created_at: '2022-09-01T00:00:00Z',
+    updated_at: '2022-09-01T00:00:00Z',
   },
   {
     id: 'fading-light',
@@ -216,7 +216,7 @@ export const STATIC_BOOKS: Book[] = [
     pdf_url: '/pdfs/A_Letdown.pdf',
     pdf_size_bytes: 182735,
     page_count: 10,
-    published_year: 2023,
+    published_year: 2024,
     publisher: 'Iron Heist',
     isbn: null,
     language: 'en',
@@ -228,8 +228,8 @@ export const STATIC_BOOKS: Book[] = [
     seo_title: 'A Letdown — Poetry by Iron Heist',
     seo_description:
       'Seven poems about the slow unravelling that follows love\'s end. Free poetry by Iron Heist.',
-    created_at: '2023-11-01T00:00:00Z',
-    updated_at: '2023-11-01T00:00:00Z',
+    created_at: '2024-01-01T00:00:00Z',
+    updated_at: '2024-01-01T00:00:00Z',
   },
   {
     id: 'a-fools-dream',
