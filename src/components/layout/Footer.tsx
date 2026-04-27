@@ -1,6 +1,22 @@
 import { Link } from 'react-router-dom'
-import { Instagram, Twitter, Heart } from 'lucide-react'
+import { Instagram, Heart } from 'lucide-react'
 import { NAV_LINKS, SOCIAL_LINKS, SITE_NAME } from '@/utils/constants'
+
+function WattpadIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M23 4H17.5L15 15.5L12.5 7H11.5L9 15.5L6.5 4H1L5.5 20H7L9.5 11L12 20H13.5L16 8.5L18.5 20H23L23 4Z" />
+    </svg>
+  )
+}
+
+function TumblrIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.304 1.406z"/>
+    </svg>
+  )
+}
 
 export function Footer() {
   const year = new Date().getFullYear()
@@ -28,13 +44,22 @@ export function Footer() {
                 <Instagram size={18} />
               </a>
               <a
-                href={SOCIAL_LINKS.twitter}
+                href={SOCIAL_LINKS.wattpad}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Twitter"
+                aria-label="Wattpad"
                 className="text-ink-500 hover:text-amber-500 transition-colors duration-150"
               >
-                <Twitter size={18} />
+                <WattpadIcon size={18} />
+              </a>
+              <a
+                href={SOCIAL_LINKS.tumblr}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Tumblr"
+                className="text-ink-500 hover:text-amber-500 transition-colors duration-150"
+              >
+                <TumblrIcon size={18} />
               </a>
             </div>
           </div>

@@ -15,9 +15,9 @@ export const READING_SAVE_INTERVAL = 5000 // ms between saves
 export const DEFAULT_AVATAR = '/images/ui/default-avatar.webp'
 
 export const SOCIAL_LINKS = {
-  instagram: 'https://instagram.com/poetsanctuary',
-  twitter: 'https://twitter.com/poetsanctuary',
-  goodreads: 'https://goodreads.com/poetsanctuary',
+  instagram: 'https://www.instagram.com/johncolt29',
+  wattpad: 'https://www.wattpad.com/user/iron_heist',
+  tumblr: 'https://ironheist6.tumblr.com/',
 }
 
 export const NAV_LINKS = [
