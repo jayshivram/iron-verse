@@ -15,7 +15,7 @@ export const STATIC_BOOKS: Book[] = [
     description:
       'I sit next to the ocean. I weep, for you are not here. You are far across, on an island, across the very ocean I\'m sitting next to.',
     long_description:
-      'You and the Moon is an intimate collection of 58 pages tracing the arc of a love divided by distance and drawn together by the night sky. Written as a journal of raw thoughts, each poem moves between ocean shores, moonlit skies, and the quiet ache of separation. The collection is organised into five movements — from the pull of the ocean to cosmic devotion to the weight of words on paper — and closes with the unwavering certainty that two souls born under the right moons will always find their way back.',
+      'You and the Moon is an intimate collection of 58 pages tracing the arc of a love divided by distance and drawn together by the night sky. Written as a journal of raw thoughts, each poem moves between ocean shores, moonlit skies, and the quiet ache of separation. The collection is organised into five movements, from the pull of the ocean to cosmic devotion to the weight of words on paper, and closes with the unwavering certainty that two souls born under the right moons will always find their way back.',
     cover_image_url: '/images/books/you-and-the-moon.webp',
     pdf_url: '/pdfs/You_and_the_Moon.pdf',
     pdf_size_bytes: 1565650,
@@ -43,7 +43,7 @@ export const STATIC_BOOKS: Book[] = [
     description:
       'I write not to escape, but to face what\'s inside. These pages hold my heart, broken and whole, bleeding and healing.',
     long_description:
-      'Garden of Grief is a 103-page raw and honest record of a year spent trying to understand the self. This collection holds sleepless nights, hollow mornings, burning houses, and the slow work of healing — all laid bare without apology. It is an invitation to feel, to remember, and to find a little peace in knowing you are not alone. As the author writes in his note: "Thank you for holding this book. Thank you for letting these words sit beside you for a while."',
+      'Garden of Grief is a 103-page raw and honest record of a year spent trying to understand the self. This collection holds sleepless nights, hollow mornings, burning houses, and the slow work of healing, all laid bare without apology. It is an invitation to feel, to remember, and to find a little peace in knowing you are not alone. As the author writes in his note: "Thank you for holding this book. Thank you for letting these words sit beside you for a while."',
     cover_image_url: '/images/books/gog.webp',
     pdf_url: '/pdfs/GARDEN_OF_GRIEF.pdf',
     pdf_size_bytes: 6939189,
@@ -69,9 +69,9 @@ export const STATIC_BOOKS: Book[] = [
     slug: 'drunk-off-her',
     subtitle: null,
     description:
-      'You are like a shadow — next to me but can\'t hold you or touch you. That is how I feel when you\'re next to me, knowing that I will never hold you.',
+      'You are like a shadow, next to me but I can\'t hold you or touch you. That is how I feel when you\'re next to me, knowing that I will never hold you.',
     long_description:
-      'Drunk Off Her is a 27-page descent into obsession, longing, and the particular madness of loving someone just out of reach. Across twelve poems — from "A Nemesis" to "A Final Nail to this Coffin" — the collection traces the full arc of intoxicating love: its dizzy heights, its slow destruction, and the moment when the writer must choose between the addiction and himself. The writing is blunt, vulnerable, and bruisingly honest.',
+      'Drunk Off Her is a 27-page descent into obsession, longing, and the particular madness of loving someone just out of reach. Across twelve poems, from "A Nemesis" to "A Final Nail to this Coffin", the collection traces the full arc of intoxicating love: its dizzy heights, its slow destruction, and the moment when the writer must choose between the addiction and himself. The writing is blunt, vulnerable, and bruisingly honest.',
     cover_image_url: '/images/books/drunk-off-her.webp',
     pdf_url: '/pdfs/DRUNK_OFF_HER.pdf',
     pdf_size_bytes: 1095079,
@@ -99,7 +99,7 @@ export const STATIC_BOOKS: Book[] = [
     description:
       'The only poem in my mind is you. You are the center of my universe. And tonight, my words revolve around you.',
     long_description:
-      'Fading Light is a 21-page meditation on love as language. The fifteen poems in this collection — from "My Words That Revolve Around You" to "A Thousand Poems" — explore what it means when every sentence you write belongs to another person. The writing moves from tender devotion through silent torment, bottles and smoke, and eventually to grief itself, asking the question all poets must face: when the person who inspires your words is gone, what becomes of the words?',
+      'Fading Light is a 21-page meditation on love as language. The fifteen poems in this collection, from "My Words That Revolve Around You" to "A Thousand Poems", explore what it means when every sentence you write belongs to another person. The writing moves from tender devotion through silent torment, bottles and smoke, and eventually to grief itself, asking the question all poets must face: when the person who inspires your words is gone, what becomes of the words?',
     cover_image_url: '/images/books/fading-light.webp',
     pdf_url: '/pdfs/Fading_Light.pdf',
     pdf_size_bytes: 194124,
@@ -115,7 +115,7 @@ export const STATIC_BOOKS: Book[] = [
     download_count: 0,
     seo_title: 'Fading Light — Poetry by Iron Heist',
     seo_description:
-      'A collection about love as language — what happens when the person who inspires every word is gone.',
+      'A collection about love as language, what happens when the person who inspires every word is gone.',
     created_at: '2024-05-01T00:00:00Z',
     updated_at: '2024-05-01T00:00:00Z',
   },
@@ -127,7 +127,7 @@ export const STATIC_BOOKS: Book[] = [
     description:
       'She was gone, and now the grass is just green. We are mosaics of all the people we hate. Perhaps hate is just love that is lost.',
     long_description:
-      'Dawn and Dusk is a 20-poem journey through mythology, nature, and the emotional seasons of loving and losing. Fourteen chapters move from "Green" — a poem about lying on grass where she used to hold him — through smoke, conquered lands, Medusa, and mercy. The collection opens with a quote from Dostoevsky and closes with the understanding that grief is love with nowhere to go. Quiet, imagistic, and deeply felt.',
+      'Dawn and Dusk is a 20-poem journey through mythology, nature, and the emotional seasons of loving and losing. Fourteen chapters move from "Green", a poem about lying on grass where she used to hold him, through smoke, conquered lands, Medusa, and mercy. The collection opens with a quote from Dostoevsky and closes with the understanding that grief is love with nowhere to go. Quiet, imagistic, and deeply felt.',
     cover_image_url: '/images/books/dawn-and-dusk.webp',
     pdf_url: '/pdfs/Dawn_and_Dusk.pdf',
     pdf_size_bytes: 157230,
@@ -155,7 +155,7 @@ export const STATIC_BOOKS: Book[] = [
     description:
       'I am thankful for these sleepless nights. If you\'re not a ghost, then why do you haunt me? I would rather stay awake and guard my heart than sleep and break it.',
     long_description:
-      'A Diary of My Thoughts is a 20-page anthology of thirteen poems that map the innermost landscape of grief and longing. Written on sleepless nights and dated with timestamps, each poem reads like a private journal entry — hollow, burning, nostalgic, and finally resolved. The collection closes with "My End" and "Mistakes", refusing to look away from the hardest parts of the human experience.',
+      'A Diary of My Thoughts is a 20-page anthology of thirteen poems that map the innermost landscape of grief and longing. Written on sleepless nights and dated with timestamps, each poem reads like a private journal entry, hollow, burning, nostalgic, and finally resolved. The collection closes with "My End" and "Mistakes", refusing to look away from the hardest parts of the human experience.',
     cover_image_url: '/images/books/a-diary-of-my-thoughts.webp',
     pdf_url: '/pdfs/A_Diary_of_my_Thoughts.pdf',
     pdf_size_bytes: 248209,
@@ -211,7 +211,7 @@ export const STATIC_BOOKS: Book[] = [
     description:
       'Love is a gamble. The price you pay when you lose love is losing yourself. How many times can you let yourself get consumed before you go numb?',
     long_description:
-      'A Letdown is a tightly wound 10-page collection of seven poems about the slow unravelling that follows love\'s end. From "Loving Comes With a Price" to "Fragments" — a poem addressed to a girl who lives as a fragment in memory — the book asks the question: when love dissolves you, who remains? The writing is unflinching and spare, giving voice to the grief of someone who once believed, and no longer knows how to stop.',
+      'A Letdown is a tightly wound 10-page collection of seven poems about the slow unravelling that follows love\'s end. From "Loving Comes With a Price" to "Fragments", a poem addressed to a girl who lives as a fragment in memory, the book asks the question: when love dissolves you, who remains? The writing is unflinching and spare, giving voice to the grief of someone who once believed, and no longer knows how to stop.',
     cover_image_url: '/images/books/a-letdown.webp',
     pdf_url: '/pdfs/A_Letdown.pdf',
     pdf_size_bytes: 182735,

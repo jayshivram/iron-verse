@@ -19,20 +19,34 @@ export default function BookReader() {
         <title>Reading: {book.title} — {SITE_NAME}</title>
       </Helmet>
 
-      {/* Force dark palette for the entire reader regardless of site theme */}
-      <div className="dark bg-ink-950 min-h-screen">
-        {/* Minimal top bar */}
-        <div className="sticky top-0 z-30 flex items-center gap-4 px-4 py-3 bg-ink-950/70 backdrop-blur-md backdrop-saturate-150 border-b border-ink-800/60">
+      {/*
+        Full-viewport reading surface — always dark, fills 100dvh.
+        PDFViewer uses h-full + flex-col to fill the remaining space.
+        No max-width, no padding: the PDF itself handles sizing internally.
+      */}
+      <div
+        className="flex flex-col overflow-hidden"
+        style={{ height: '100dvh', background: '#111' }}
+      >
+        {/* Top bar */}
+        <div
+          className="flex-none flex items-center gap-3 px-4 py-3 border-b"
+          style={{ background: '#1a1a1a', borderColor: 'rgba(255,255,255,0.08)' }}
+        >
           <Link
             to={`/books/${book.slug}`}
-            className="flex items-center gap-2 text-sm text-ink-400 hover:text-ink-100 transition-colors font-sans"
+            className="flex items-center gap-2 text-sm transition-colors font-sans"
+            style={{ color: 'rgba(255,255,255,0.5)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = '#fff' }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}
           >
             <ArrowLeft size={15} />
             {book.title}
           </Link>
         </div>
 
-        <div className="max-w-5xl mx-auto px-4 py-6">
+        {/* Viewer fills every remaining pixel */}
+        <div className="flex-1 min-h-0">
           <PDFViewer book={book} />
         </div>
       </div>

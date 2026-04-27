@@ -43,7 +43,7 @@ export function Header() {
             {/* Wordmark */}
             <Link to="/" className="group flex items-center gap-2.5" aria-label="Home">
               <span className="font-display text-xl text-amber-500 group-hover:text-amber-400 transition-colors duration-200">
-                Poet's Sanctuary
+                Iron Verse
               </span>
             </Link>
 

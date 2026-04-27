@@ -20,26 +20,30 @@ interface PDFViewerProps {
 export function PDFViewer({ book }: PDFViewerProps) {
   const [numPages, setNumPages] = useState(0)
   const [pageNumber, setPageNumber] = useState(1)
-  const [scale, setScale] = useState(1.0)
+  const [zoom, setZoom] = useState(1.0)
   const [isFullscreen, setIsFullscreen] = useState(false)
-  const [contentWidth, setContentWidth] = useState(0)
-  const containerRef = useRef<HTMLDivElement>(null)
+  // Actual dimensions of the content area (measured live)
+  const [dims, setDims] = useState({ w: 0, h: 0 })
+  // Actual PDF page dimensions in PDF units (captured on first page load)
+  const [pageSize, setPageSize] = useState({ w: 595, h: 842 })
   const contentRef = useRef<HTMLDivElement>(null)
+  const touchStartX = useRef<number | null>(null)
 
   const { user } = useAuth()
   const saveProgress = useSaveReadingProgress(book.id, numPages)
   const { data: savedProgress } = useReadingProgress(book.id)
 
-  // Measure content area width for responsive page sizing
+  // Measure both width AND height of the content area so we can fit portrait
+  // pages by height on landscape screens and by width on portrait screens.
   useEffect(() => {
     const el = contentRef.current
     if (!el) return
-    const observer = new ResizeObserver((entries) => {
-      const w = entries[0]?.contentRect.width
-      if (w) setContentWidth(w)
+    const ro = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect
+      setDims({ w: width, h: height })
     })
-    observer.observe(el)
-    return () => observer.disconnect()
+    ro.observe(el)
+    return () => ro.disconnect()
   }, [])
 
   // Restore reading position
@@ -73,36 +77,56 @@ export function PDFViewer({ book }: PDFViewerProps) {
   const goToPrevPage = () => setPageNumber((p) => Math.max(1, p - 1))
   const goToNextPage = () => setPageNumber((p) => Math.min(numPages, p + 1))
 
-  const zoomIn = () => setScale((s) => Math.min(2.5, s + 0.25))
-  const zoomOut = () => setScale((s) => Math.max(0.5, s - 0.25))
-  const resetZoom = () => setScale(1.0)
+  const zoomIn  = () => setZoom((z) => Math.min(3.0, +(z + 0.25).toFixed(2)))
+  const zoomOut = () => setZoom((z) => Math.max(0.5, +(z - 0.25).toFixed(2)))
+  const resetZoom = () => setZoom(1.0)
+
+  // ── Page sizing ────────────────────────────────────────────────────────────
+  // aspect = width / height of the actual PDF page (portrait books < 1)
+  const aspect      = pageSize.w / pageSize.h
+  const padding     = 24                                       // px each side
+  const fitByWidth  = dims.w > 0 ? dims.w - padding * 2 : 0
+  const fitByHeight = dims.h > 0 ? Math.floor((dims.h - 40) * aspect) : 0
+  // Use whichever constraint is tighter so the page always fits on screen.
+  // On a wide desktop: fitByHeight is smaller (portrait page, landscape screen).
+  // On a narrow mobile: fitByWidth is smaller.
+  const baseWidth  = fitByWidth > 0 && fitByHeight > 0
+    ? Math.min(fitByWidth, fitByHeight)
+    : Math.max(fitByWidth, fitByHeight)
+  const pageWidth  = baseWidth > 0 ? Math.floor(baseWidth * zoom) : undefined
+  // ──────────────────────────────────────────────────────────────────────────
 
   const percentage = numPages > 0 ? Math.round((pageNumber / numPages) * 100) : 0
 
   return (
     <div
-      ref={containerRef}
       className={cn(
-        'flex flex-col bg-ink-950',
-        isFullscreen ? 'fixed inset-0 z-50' : 'rounded-xl border border-ink-800 overflow-hidden',
+        'flex flex-col h-full',
+        isFullscreen && 'fixed inset-0 z-50',
       )}
+      style={{ background: '#111' }}
     >
       {/* Toolbar */}
-      <div className="flex items-center justify-between px-4 py-3 bg-ink-900 border-b border-ink-800">
+      <div
+        className="flex-none flex items-center justify-between px-3 py-2.5 border-b"
+        style={{ background: '#1a1a1a', borderColor: 'rgba(255,255,255,0.08)' }}
+      >
         {/* Page navigation */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <button
             onClick={goToPrevPage}
             disabled={pageNumber <= 1}
             aria-label="Previous page"
-            className="w-8 h-8 flex items-center justify-center rounded text-ink-400
-                       hover:text-ink-100 hover:bg-ink-800 disabled:opacity-30
-                       disabled:cursor-not-allowed transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded
+                       disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            style={{ color: 'rgba(255,255,255,0.5)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = '#fff' }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}
           >
             <ChevronLeft size={16} />
           </button>
 
-          <div className="flex items-center gap-1.5 text-sm font-sans">
+          <div className="flex items-center gap-1 text-sm font-sans">
             <input
               type="number"
               min={1}
@@ -112,61 +136,75 @@ export function PDFViewer({ book }: PDFViewerProps) {
                 const val = Math.max(1, Math.min(numPages, Number(e.target.value)))
                 setPageNumber(val)
               }}
-              className="w-12 text-center bg-ink-800 border border-ink-700 rounded
-                         text-ink-100 text-sm py-1 focus:outline-none focus:border-amber-500"
+              className="w-10 text-center rounded text-sm py-0.5 focus:outline-none"
+              style={{
+                background: 'rgba(255,255,255,0.08)',
+                border: '1px solid rgba(255,255,255,0.15)',
+                color: '#fff',
+              }}
               aria-label="Current page"
             />
-            <span className="text-ink-500">/ {numPages}</span>
+            <span style={{ color: 'rgba(255,255,255,0.35)' }}>/ {numPages}</span>
           </div>
 
           <button
             onClick={goToNextPage}
             disabled={pageNumber >= numPages}
             aria-label="Next page"
-            className="w-8 h-8 flex items-center justify-center rounded text-ink-400
-                       hover:text-ink-100 hover:bg-ink-800 disabled:opacity-30
-                       disabled:cursor-not-allowed transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded
+                       disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            style={{ color: 'rgba(255,255,255,0.5)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = '#fff' }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}
           >
             <ChevronRight size={16} />
           </button>
         </div>
 
         {/* Controls */}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-0.5">
           <button
             onClick={zoomOut}
             aria-label="Zoom out"
-            className="w-8 h-8 flex items-center justify-center rounded text-ink-400
-                       hover:text-ink-100 hover:bg-ink-800 transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded transition-colors"
+            style={{ color: 'rgba(255,255,255,0.5)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = '#fff' }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}
           >
             <ZoomOut size={15} />
           </button>
 
           <button
             onClick={resetZoom}
-            className="text-xs font-sans text-ink-400 hover:text-ink-100 px-2 py-1
-                       hover:bg-ink-800 rounded transition-colors min-w-[3.5rem] text-center"
+            className="text-xs font-sans px-2 py-1 rounded transition-colors min-w-[3.5rem] text-center"
+            style={{ color: 'rgba(255,255,255,0.5)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = '#fff' }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}
           >
-            {Math.round(scale * 100)}%
+            {Math.round(zoom * 100)}%
           </button>
 
           <button
             onClick={zoomIn}
             aria-label="Zoom in"
-            className="w-8 h-8 flex items-center justify-center rounded text-ink-400
-                       hover:text-ink-100 hover:bg-ink-800 transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded transition-colors"
+            style={{ color: 'rgba(255,255,255,0.5)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = '#fff' }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}
           >
             <ZoomIn size={15} />
           </button>
 
-          <div className="w-px h-5 bg-ink-700 mx-1" />
+          <div className="w-px h-4 mx-1" style={{ background: 'rgba(255,255,255,0.15)' }} />
 
           <a
             href={book.pdf_url}
             download={`${book.slug}.pdf`}
             aria-label="Download PDF"
-            className="w-8 h-8 flex items-center justify-center rounded text-ink-400
-                       hover:text-amber-500 hover:bg-ink-800 transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded transition-colors"
+            style={{ color: 'rgba(255,255,255,0.5)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = '#f59e0b' }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}
           >
             <Download size={15} />
           </a>
@@ -174,8 +212,10 @@ export function PDFViewer({ book }: PDFViewerProps) {
           <button
             onClick={() => setIsFullscreen((f) => !f)}
             aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
-            className="w-8 h-8 flex items-center justify-center rounded text-ink-400
-                       hover:text-ink-100 hover:bg-ink-800 transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded transition-colors"
+            style={{ color: 'rgba(255,255,255,0.5)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = '#fff' }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}
           >
             {isFullscreen ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
           </button>
@@ -183,10 +223,10 @@ export function PDFViewer({ book }: PDFViewerProps) {
       </div>
 
       {/* Progress bar */}
-      <div className="h-0.5 bg-ink-800">
+      <div className="flex-none h-0.5" style={{ background: 'rgba(255,255,255,0.08)' }}>
         <div
-          className="h-full bg-amber-500 transition-all duration-300"
-          style={{ width: `${percentage}%` }}
+          className="h-full transition-all duration-300"
+          style={{ width: `${percentage}%`, background: '#f59e0b' }}
           role="progressbar"
           aria-valuenow={percentage}
           aria-valuemin={0}
@@ -195,22 +235,37 @@ export function PDFViewer({ book }: PDFViewerProps) {
         />
       </div>
 
-      {/* PDF content */}
-      <div ref={contentRef} className="flex-1 overflow-auto">
+      {/* PDF content — scrollable, swipeable */}
+      <div
+        ref={contentRef}
+        className="flex-1 min-h-0 overflow-auto"
+        onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX }}
+        onTouchEnd={(e) => {
+          if (touchStartX.current === null) return
+          const dx = e.changedTouches[0].clientX - touchStartX.current
+          if (Math.abs(dx) > 50) dx < 0 ? goToNextPage() : goToPrevPage()
+          touchStartX.current = null
+        }}
+      >
         <Document
           file={book.pdf_url}
           onLoadSuccess={onDocumentLoadSuccess}
           loading={
-            <div className="flex items-center justify-center py-20">
+            <div className="flex items-center justify-center h-full py-20">
               <LoadingSpinner size="lg" label="Loading PDF..." />
             </div>
           }
           error={
-            <div className="flex flex-col items-center justify-center py-20 text-center px-6">
-              <p className="text-ink-400 font-sans text-sm mb-4">
+            <div className="flex flex-col items-center justify-center h-full py-20 text-center px-6">
+              <p className="font-sans text-sm mb-4" style={{ color: 'rgba(255,255,255,0.4)' }}>
                 Could not load the PDF. Try downloading it directly.
               </p>
-              <a href={book.pdf_url} download className="btn-secondary text-sm">
+              <a
+                href={book.pdf_url}
+                download
+                className="px-4 py-2 rounded text-sm font-sans border transition-colors"
+                style={{ borderColor: 'rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.7)' }}
+              >
                 Download PDF
               </a>
             </div>
@@ -223,15 +278,20 @@ export function PDFViewer({ book }: PDFViewerProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.15 }}
+              className="py-4"
             >
               <Page
                 pageNumber={pageNumber}
-                width={contentWidth > 0 ? Math.floor((contentWidth - 32) * scale) : undefined}
-                scale={contentWidth > 0 ? undefined : scale}
+                width={pageWidth}
                 renderTextLayer
                 renderAnnotationLayer={false}
-                className="my-6 shadow-ink rounded"
+                className="shadow-2xl"
+                onLoadSuccess={(page) => {
+                  // Capture actual page dimensions so aspect ratio is exact
+                  const [, , w, h] = page.view
+                  if (w && h) setPageSize({ w, h })
+                }}
               />
             </motion.div>
           </AnimatePresence>
@@ -239,24 +299,35 @@ export function PDFViewer({ book }: PDFViewerProps) {
       </div>
 
       {/* Bottom navigation */}
-      <div className="flex items-center justify-center gap-4 px-4 py-3 bg-ink-900 border-t border-ink-800">
+      <div
+        className="flex-none flex items-center justify-between px-4 py-2.5 border-t"
+        style={{ background: '#1a1a1a', borderColor: 'rgba(255,255,255,0.08)' }}
+      >
         <button
           onClick={goToPrevPage}
           disabled={pageNumber <= 1}
-          className="btn-secondary text-sm py-2 px-4 disabled:opacity-30"
+          className="flex items-center gap-1.5 px-4 py-2 rounded text-sm font-sans
+                     border transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+          style={{ borderColor: 'rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.6)' }}
+          onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)'; e.currentTarget.style.color = '#fff' }}
+          onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; e.currentTarget.style.color = 'rgba(255,255,255,0.6)' }}
         >
           <ChevronLeft size={15} />
           Previous
         </button>
 
-        <span className="text-xs text-ink-500 font-sans">
+        <span className="text-xs font-sans" style={{ color: 'rgba(255,255,255,0.3)' }}>
           {percentage}% complete
         </span>
 
         <button
           onClick={goToNextPage}
           disabled={pageNumber >= numPages}
-          className="btn-primary text-sm py-2 px-4 disabled:opacity-30"
+          className="flex items-center gap-1.5 px-4 py-2 rounded text-sm font-sans
+                     transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+          style={{ background: '#f59e0b', color: '#111' }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = '#fbbf24' }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = '#f59e0b' }}
         >
           Next
           <ChevronRight size={15} />

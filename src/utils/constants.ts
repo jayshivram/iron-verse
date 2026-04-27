@@ -1,7 +1,7 @@
-export const SITE_NAME = "Poet's Sanctuary"
+export const SITE_NAME = 'Iron Verse'
 export const SITE_DESCRIPTION =
-  "Nine poetry books. All free. Words about grief, love, obsession, and the ordinary ache of being alive."
-export const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://poetsanctuary.com'
+  'Nine poetry books. All free. Words about grief, love, obsession, and the ordinary ache of being alive.'
+export const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://iron-verse.vercel.app'
 
 export const BOOKS_PER_PAGE = 9
 export const POSTS_PER_PAGE = 10
