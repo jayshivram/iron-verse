@@ -33,19 +33,19 @@ export default function About() {
         >
           <p>
             I write because the alternative is carrying it around unsaid. Poetry is where I put
-            the things that don't fit anywhere else — grief that outlasts the reason for it, love
+            the things that don't fit anywhere else: grief that outlasts the reason for it, love
             that arrives at the wrong time, the strange comfort of 3am.
           </p>
 
           <p>
             Nine collections. All free. That part matters to me. I didn't write these for a market
-            or a shelf — I wrote them to reach people who might recognize something of themselves
+            or a shelf. I wrote them to reach people who might recognize something of themselves
             in the words. A paywall between the poem and the reader seems like a betrayal of that.
           </p>
 
           <p>
-            The name is a contradiction on purpose. <em>Iron</em> — something rigid, cold, industrial.
-            <em>Heist</em> — something stolen, urgent, barely planned. That tension is where most of
+            The name is a contradiction on purpose. <em>Iron</em>: something rigid, cold, industrial.
+            <em>Heist</em>: something stolen, urgent, barely planned. That tension is where most of
             these poems live.
           </p>
 

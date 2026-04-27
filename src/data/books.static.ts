@@ -29,11 +29,11 @@ export const STATIC_BOOKS: Book[] = [
     tags: ['love', 'longing', 'ocean', 'cosmic', 'distance', 'devotion'],
     view_count: 0,
     download_count: 0,
-    seo_title: 'You and the Moon — Poetry by Iron Heist',
+    seo_title: 'You and the Moon | Poetry by Iron Heist',
     seo_description:
       'A cosmic love story told in verse. Free poetry book by Jay Shivram (Iron Heist).',
-    created_at: '2022-06-01T00:00:00Z',
-    updated_at: '2022-06-01T00:00:00Z',
+    created_at: '2022-12-01T00:00:00Z',
+    updated_at: '2022-12-01T00:00:00Z',
   },
   {
     id: 'garden-of-grief',
@@ -57,7 +57,7 @@ export const STATIC_BOOKS: Book[] = [
     tags: ['grief', 'healing', 'introspection', 'self-discovery', 'loss', 'identity'],
     view_count: 0,
     download_count: 0,
-    seo_title: 'Garden of Grief — Poetry by Iron Heist',
+    seo_title: 'Garden of Grief | Poetry by Iron Heist',
     seo_description:
       'A raw and honest record of grief, healing, and self-discovery. Free poetry collection by Jay Shivram (Iron Heist).',
     created_at: '2025-01-01T00:00:00Z',
@@ -85,7 +85,7 @@ export const STATIC_BOOKS: Book[] = [
     tags: ['obsession', 'love', 'longing', 'heartbreak', 'addiction', 'memories'],
     view_count: 0,
     download_count: 0,
-    seo_title: 'Drunk Off Her — Poetry by Iron Heist',
+    seo_title: 'Drunk Off Her | Poetry by Iron Heist',
     seo_description:
       'A 27-poem descent into obsession and the particular madness of loving someone just out of reach.',
     created_at: '2022-09-01T00:00:00Z',
@@ -113,7 +113,7 @@ export const STATIC_BOOKS: Book[] = [
     tags: ['love', 'poetry', 'grief', 'words', 'devotion', 'loss'],
     view_count: 0,
     download_count: 0,
-    seo_title: 'Fading Light — Poetry by Iron Heist',
+    seo_title: 'Fading Light | Poetry by Iron Heist',
     seo_description:
       'A collection about love as language, what happens when the person who inspires every word is gone.',
     created_at: '2024-05-01T00:00:00Z',
@@ -141,7 +141,7 @@ export const STATIC_BOOKS: Book[] = [
     tags: ['nature', 'mythology', 'grief', 'seasons', 'loss', 'imagery'],
     view_count: 0,
     download_count: 0,
-    seo_title: 'Dawn and Dusk — Poetry by Iron Heist',
+    seo_title: 'Dawn and Dusk | Poetry by Iron Heist',
     seo_description:
       'Mythology, nature, and the emotional seasons of loving and losing. Free poetry by Iron Heist.',
     created_at: '2024-04-01T00:00:00Z',
@@ -169,7 +169,7 @@ export const STATIC_BOOKS: Book[] = [
     tags: ['introspection', 'grief', 'sleepless', 'heartbreak', 'nostalgia', 'honesty'],
     view_count: 0,
     download_count: 0,
-    seo_title: 'A Diary of My Thoughts — Poetry by Iron Heist',
+    seo_title: 'A Diary of My Thoughts | Poetry by Iron Heist',
     seo_description:
       'Thirteen poems written on sleepless nights. An honest record of grief, longing, and the self.',
     created_at: '2024-03-01T00:00:00Z',
@@ -197,7 +197,7 @@ export const STATIC_BOOKS: Book[] = [
     tags: ['faith', 'freedom', 'seasons', 'love', 'forgiveness', 'identity'],
     view_count: 0,
     download_count: 0,
-    seo_title: 'Midday Blues — Poetry by Iron Heist',
+    seo_title: 'Midday Blues | Poetry by Iron Heist',
     seo_description:
       'A collection on faith, freedom, and the impossibility of erasing someone from your poetry.',
     created_at: '2024-02-01T00:00:00Z',
@@ -225,7 +225,7 @@ export const STATIC_BOOKS: Book[] = [
     tags: ['heartbreak', 'grief', 'fragments', 'loss', 'love', 'dissolution'],
     view_count: 0,
     download_count: 0,
-    seo_title: 'A Letdown — Poetry by Iron Heist',
+    seo_title: 'A Letdown | Poetry by Iron Heist',
     seo_description:
       'Seven poems about the slow unravelling that follows love\'s end. Free poetry by Iron Heist.',
     created_at: '2024-01-01T00:00:00Z',
@@ -253,7 +253,7 @@ export const STATIC_BOOKS: Book[] = [
     tags: ['dreams', 'illusions', 'existence', 'philosophy', 'despair', 'hope'],
     view_count: 0,
     download_count: 0,
-    seo_title: "A Fool's Dream — Poetry by Iron Heist",
+    seo_title: "A Fool's Dream | Poetry by Iron Heist",
     seo_description:
       'A philosophical collection about the gap between what we imagine and what we are. Free poetry by Iron Heist.',
     created_at: '2023-08-01T00:00:00Z',
@@ -269,7 +269,9 @@ export function getStaticBooks(): Book[] {
 }
 
 export function getStaticFeaturedBooks(): Book[] {
-  return STATIC_BOOKS.filter((b) => b.is_featured)
+  return STATIC_BOOKS
+    .filter((b) => b.is_featured)
+    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 }
 
 export function getStaticBookBySlug(slug: string): Book | null {

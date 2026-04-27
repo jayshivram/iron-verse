@@ -64,7 +64,7 @@ export const BOOK_QUOTES: BookQuote[] = [
     bookTitle: 'Fading Light',
   },
   {
-    text: 'Perhaps it\'s the end to you and me. Without your touch, all hopes, all dreams, all of me — they will all cease to exist. Only my poems will keep existing till the end of time.',
+    text: 'Perhaps it\'s the end to you and me. Without your touch, all hopes, all dreams, all of me, they will all cease to exist. Only my poems will keep existing till the end of time.',
     poem: 'You and Me',
     bookSlug: 'fading-light',
     bookTitle: 'Fading Light',
