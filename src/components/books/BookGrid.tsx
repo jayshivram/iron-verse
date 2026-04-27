@@ -43,7 +43,7 @@ export function BookGrid() {
             aria-label="Search books"
           />
         </div>
-        <div className="flex items-center gap-2 self-start">
+        <div className="flex items-center gap-2 shrink-0">
           <Select
             value={sortBy}
             onChange={(e) => { setSortBy(e.target.value as BooksFilter['sortBy']); setPage(1) }}

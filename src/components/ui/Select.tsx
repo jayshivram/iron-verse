@@ -14,7 +14,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     const inputId = id || props.name
 
     return (
-      <div className="w-full">
+      <div className={label ? 'w-full' : undefined}>
         {label && (
           <label htmlFor={inputId} className="label">
             {label}
@@ -24,8 +24,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           <select
             ref={ref}
             id={inputId}
+            autoComplete="off"
             className={cn(
-              'input appearance-none pr-10 cursor-pointer',
+              'input appearance-none pr-10 cursor-pointer !w-full',
               error && 'border-red-500',
               className,
             )}

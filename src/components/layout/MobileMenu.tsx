@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { NAV_LINKS, SOCIAL_LINKS } from '@/utils/constants'
 import { useAuth } from '@/hooks/useAuth'
 import { cn } from '@/utils/cn'
-import { Instagram } from 'lucide-react'
+import { Instagram, X } from 'lucide-react'
 
 function WattpadIcon({ size = 18 }: { size?: number }) {
   return (
@@ -52,6 +52,14 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           >
             <div className="flex items-center justify-between px-5 h-16 border-b border-ink-800">
               <span className="font-display text-lg text-amber-500">Menu</span>
+              <button
+                onClick={onClose}
+                aria-label="Close menu"
+                className="w-9 h-9 flex items-center justify-center rounded-md text-ink-400
+                           hover:text-ink-100 hover:bg-ink-800 transition-colors duration-150"
+              >
+                <X size={20} />
+              </button>
             </div>
 
             <nav className="flex-1 overflow-y-auto py-4 px-3">

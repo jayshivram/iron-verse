@@ -252,6 +252,15 @@
     border-color: var(--color-amber);
   }
 
+  /* Suppress browser autofill / credential-manager color injections */
+  .input:-webkit-autofill,
+  .input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px theme('colors.ink.800') inset !important;
+    -webkit-text-fill-color: theme('colors.ink.100') !important;
+  }
+  select.input::-ms-expand { display: none; }
+  select.input { color-scheme: dark; }
+
   .textarea {
     @apply input resize-none min-h-[120px];
   }
