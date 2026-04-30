@@ -1,5 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /api/
+Crawl-delay: 1
 
-Sitemap: https://ironheist.com/sitemap.xml
+# Sitemap
+Sitemap: https://iron-verse-poetry.vercel.app/sitemap.xml

@@ -1,5 +1,4 @@
 import { useParams, Link } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
 import { useBlogPost, useRelatedPosts } from '@/hooks/useBlogPosts'
 import { PageLoader } from '@/components/ui/LoadingSpinner'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
@@ -9,11 +8,11 @@ import { ShareButtons } from '@/components/blog/ShareButtons'
 import { ReadingProgressBar } from '@/components/blog/ReadingProgressBar'
 import { BlogSidebar } from '@/components/blog/BlogSidebar'
 import { formatDate, formatReadingTime } from '@/utils/formatters'
-import { SITE_NAME } from '@/utils/constants'
 import { blogService } from '@/services/blog.service'
 import { useEffect } from 'react'
 import { Clock, Calendar, Eye } from 'lucide-react'
 import { formatCount } from '@/utils/formatters'
+import { SEOHead } from '@/components/ui/SEOHead'
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>()
@@ -41,11 +40,38 @@ export default function BlogPost() {
 
   return (
     <>
-      <Helmet>
-        <title>{post.title} — {SITE_NAME}</title>
-        <meta name="description" content={post.excerpt || ''} />
-        {post.featured_image_url && <meta property="og:image" content={post.featured_image_url} />}
-      </Helmet>
+      <SEOHead
+        title={post.title}
+        description={post.excerpt || `Read ${post.title} on the Iron Verse blog by Iron Heist.`}
+        path={`/blog/${post.slug}`}
+        image={post.featured_image_url || undefined}
+        imageAlt={post.title}
+        type="article"
+        publishedAt={post.published_at || undefined}
+        modifiedAt={post.updated_at || undefined}
+        keywords={post.tags || []}
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: post.title,
+          description: post.excerpt,
+          image: post.featured_image_url,
+          url: `https://iron-verse-poetry.vercel.app/blog/${post.slug}`,
+          datePublished: post.published_at,
+          dateModified: post.updated_at || post.published_at,
+          author: {
+            '@type': 'Person',
+            name: 'Iron Heist',
+            url: 'https://iron-verse-poetry.vercel.app/about',
+          },
+          publisher: {
+            '@type': 'Organization',
+            name: 'Iron Verse',
+            url: 'https://iron-verse-poetry.vercel.app',
+          },
+          inLanguage: 'en',
+        }}
+      />
 
       <ReadingProgressBar />
 

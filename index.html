@@ -2,12 +2,84 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#8B5E3C" />
-    <title>Iron Verse</title>
-    <meta name="description" content="Nine poetry books. All free. Words about grief, love, obsession, and the ordinary ache of being alive." />
-    <!-- Restore theme before first paint to prevent flash -->
+
+    <!-- ── Primary Meta ─────────────────────────────────────────────────── -->
+    <title>Iron Verse — Poetry by Iron Heist</title>
+    <meta name="description" content="Nine free poetry collections by Iron Heist. Raw, honest writing about grief, longing, desire, and the ordinary ache of being alive. Read online or download the PDFs — all free, always." />
+    <meta name="author" content="Iron Heist" />
+    <meta name="keywords" content="Iron Heist, Iron Verse, poetry, free poetry, poetry books, grief poetry, love poetry, sad poetry, emotional poetry, PDF poetry books, read poetry online" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="https://iron-verse-poetry.vercel.app/" />
+
+    <!-- ── Theme ─────────────────────────────────────────────────────────── -->
+    <meta name="theme-color" content="#c17d3c" />
+    <meta name="color-scheme" content="dark light" />
+
+    <!-- ── Favicons ──────────────────────────────────────────────────────── -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- ── Open Graph (Facebook, WhatsApp, LinkedIn, Discord) ───────────── -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Iron Verse" />
+    <meta property="og:title" content="Iron Verse — Poetry by Iron Heist" />
+    <meta property="og:description" content="Nine free poetry collections. Grief, longing, desire, clarity. All of it free. All of it yours." />
+    <meta property="og:url" content="https://iron-verse-poetry.vercel.app/" />
+    <meta property="og:image" content="https://iron-verse-poetry.vercel.app/images/ui/og-cover.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Iron Verse — Poetry by Iron Heist" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- ── Twitter / X Card ──────────────────────────────────────────────── -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Iron Verse — Poetry by Iron Heist" />
+    <meta name="twitter:description" content="Nine free poetry collections. Grief, longing, desire, clarity. All of it free. All of it yours." />
+    <meta name="twitter:image" content="https://iron-verse-poetry.vercel.app/images/ui/og-cover.webp" />
+    <meta name="twitter:image:alt" content="Iron Verse — Poetry by Iron Heist" />
+
+    <!-- ── JSON-LD Structured Data ───────────────────────────────────────── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://iron-verse-poetry.vercel.app/#website",
+          "url": "https://iron-verse-poetry.vercel.app/",
+          "name": "Iron Verse",
+          "description": "Nine free poetry collections by Iron Heist",
+          "author": {
+            "@type": "Person",
+            "name": "Iron Heist",
+            "url": "https://iron-verse-poetry.vercel.app/about"
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://iron-verse-poetry.vercel.app/search?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://iron-verse-poetry.vercel.app/#author",
+          "name": "Iron Heist",
+          "url": "https://iron-verse-poetry.vercel.app/about",
+          "description": "Poet behind Iron Verse — nine free collections about grief, longing, desire, and clarity.",
+          "sameAs": [
+            "https://www.instagram.com/ironheistpoetry",
+            "https://www.wattpad.com/user/ironheist"
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- ── Restore theme before first paint (prevents flash) ────────────── -->
     <script>
       (function() {
         var stored = localStorage.getItem('ps_theme');
@@ -17,7 +89,7 @@
       })();
     </script>
 
-    <!-- Preconnect to Google Fonts -->
+    <!-- ── Google Fonts ───────────────────────────────────────────────────── -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -30,3 +102,4 @@
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
+

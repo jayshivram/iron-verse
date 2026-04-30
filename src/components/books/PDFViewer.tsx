@@ -10,7 +10,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { useAuth } from '@/hooks/useAuth'
 import { useSaveReadingProgress, useReadingProgress } from '@/hooks/useReadingProgress'
-import { cn } from '@/utils/cn'
 import type { Book } from '@/types/database.types'
 
 interface PDFViewerProps {
@@ -26,8 +25,29 @@ export function PDFViewer({ book }: PDFViewerProps) {
   const [dims, setDims] = useState({ w: 0, h: 0 })
   // Actual PDF page dimensions in PDF units (captured on first page load)
   const [pageSize, setPageSize] = useState({ w: 595, h: 842 })
+  const viewerRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const touchStartX = useRef<number | null>(null)
+
+  // Lock body scroll and handle Escape key when CSS fullscreen is active
+  useEffect(() => {
+    if (isFullscreen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [isFullscreen])
+
+  // Escape key exits CSS fullscreen
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isFullscreen) setIsFullscreen(false)
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [isFullscreen])
+
 
   const { user } = useAuth()
   const saveProgress = useSaveReadingProgress(book.id, numPages)
@@ -100,11 +120,14 @@ export function PDFViewer({ book }: PDFViewerProps) {
 
   return (
     <div
-      className={cn(
-        'flex flex-col h-full',
-        isFullscreen && 'fixed inset-0 z-50',
-      )}
-      style={{ background: '#111' }}
+      ref={viewerRef}
+      className="flex flex-col h-full"
+      style={isFullscreen ? {
+        position: 'fixed',
+        inset: 0,
+        zIndex: 9999,
+        background: '#111',
+      } : { background: '#111' }}
     >
       {/* Toolbar */}
       <div

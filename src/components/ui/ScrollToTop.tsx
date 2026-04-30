@@ -1,8 +1,21 @@
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowUp } from 'lucide-react'
 
+// ── Route-change scroll reset ──────────────────────────────────────────────
+// React Router does NOT reset scroll position on navigation by default.
+// This hook fires on every pathname change and snaps the page to the top.
+function useScrollToTopOnRouteChange() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior })
+  }, [pathname])
+}
+
 export function ScrollToTop() {
+  useScrollToTopOnRouteChange()
+
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {

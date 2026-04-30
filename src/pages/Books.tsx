@@ -1,15 +1,24 @@
-import { Helmet } from 'react-helmet-async'
 import { BookGrid } from '@/components/books/BookGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
-import { SITE_NAME } from '@/utils/constants'
+import { SEOHead } from '@/components/ui/SEOHead'
 
 export default function Books() {
   return (
     <>
-      <Helmet>
-        <title>All Collections — {SITE_NAME}</title>
-        <meta name="description" content="Browse all free poetry collections by Iron Heist. Download or read online." />
-      </Helmet>
+      <SEOHead
+        title="All Poetry Collections"
+        description="Browse all nine free poetry collections by Iron Heist. Read online instantly or download the PDF. Grief, love, longing, desire — all of it free."
+        path="/books"
+        keywords={['poetry collections', 'free poetry PDF', 'read poetry online', 'Iron Heist books']}
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: 'All Poetry Collections — Iron Verse',
+          url: 'https://iron-verse-poetry.vercel.app/books',
+          description: 'Nine free poetry collections by Iron Heist',
+          author: { '@type': 'Person', name: 'Iron Heist' },
+        }}
+      />
 
       <div className="max-w-7xl mx-auto px-6 pt-10 pb-20">
         <Breadcrumbs items={[{ label: 'Books', href: '/books' }]} />

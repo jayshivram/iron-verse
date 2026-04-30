@@ -111,12 +111,18 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    /* Expose viewport height as a CSS var so components can use it */
+    --vh: 1vh;
   }
 
   body {
     @apply bg-ink-950 text-ink-100 font-body;
     font-size: 17px;
     line-height: 1.7;
+    overflow-x: hidden;
+    /* Prevent margin collapse pushing content off-screen */
+    min-width: 320px;
   }
 
   ::selection {

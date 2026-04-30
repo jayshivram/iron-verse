@@ -4,8 +4,15 @@ import { NAV_LINKS, SOCIAL_LINKS, SITE_NAME } from '@/utils/constants'
 
 function WattpadIcon({ size = 18 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-      <path d="M23 4H17.5L15 15.5L12.5 7H11.5L9 15.5L6.5 4H1L5.5 20H7L9.5 11L12 20H13.5L16 8.5L18.5 20H23L23 4Z" />
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      {/* Official Wattpad 'W' logomark */}
+      <path d="M 4 3 L 7.5 3 L 9.75 13.5 L 12 5 L 14.25 13.5 L 16.5 3 L 20 3 L 16 19 L 13.5 19 L 12 12.5 L 10.5 19 L 8 19 Z" />
     </svg>
   )
 }

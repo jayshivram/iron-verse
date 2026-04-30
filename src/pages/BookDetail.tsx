@@ -1,17 +1,16 @@
 import { useParams, Link } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { useBook } from '@/hooks/useBooks'
 import { BookmarkButton } from '@/components/books/BookmarkButton'
 import { DownloadButton } from '@/components/books/DownloadButton'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { PageLoader } from '@/components/ui/LoadingSpinner'
-import { SITE_NAME } from '@/utils/constants'
 import { formatCount } from '@/utils/formatters'
 import { Eye, Download, BookOpen, Tag, Quote } from 'lucide-react'
 import { booksService } from '@/services/books.service'
 import { useEffect } from 'react'
 import { BOOK_QUOTES } from '@/data/quotes.static'
+import { SEOHead } from '@/components/ui/SEOHead'
 
 export default function BookDetail() {
   const { slug } = useParams<{ slug: string }>()
@@ -37,11 +36,39 @@ export default function BookDetail() {
 
   return (
     <>
-      <Helmet>
-        <title>{book.title} — {SITE_NAME}</title>
-        <meta name="description" content={book.description} />
-        <meta property="og:image" content={book.cover_image_url} />
-      </Helmet>
+      <SEOHead
+        title={`${book.title} — Free Poetry by Iron Heist`}
+        titleExact
+        description={book.description || `Read ${book.title} — a free poetry collection by Iron Heist. Available to read online and download as a PDF.`}
+        path={`/books/${book.slug}`}
+        image={book.cover_image_url || undefined}
+        imageAlt={`${book.title} cover — poetry by Iron Heist`}
+        type="book"
+        publishedAt={book.published_year ? `${book.published_year}-01-01` : undefined}
+        keywords={[book.title, ...(book.tags || []), 'poetry book', 'free PDF', 'Iron Heist']}
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Book',
+          name: book.title,
+          description: book.description,
+          url: `https://iron-verse-poetry.vercel.app/books/${book.slug}`,
+          image: book.cover_image_url,
+          datePublished: book.published_year ? `${book.published_year}` : undefined,
+          author: {
+            '@type': 'Person',
+            name: 'Iron Heist',
+            url: 'https://iron-verse-poetry.vercel.app/about',
+          },
+          publisher: {
+            '@type': 'Organization',
+            name: 'Iron Verse',
+            url: 'https://iron-verse-poetry.vercel.app',
+          },
+          inLanguage: 'en',
+          isAccessibleForFree: true,
+          genre: 'Poetry',
+        }}
+      />
 
       <div className="max-w-6xl mx-auto px-6 pt-10 pb-20">
         <Breadcrumbs

@@ -1,16 +1,28 @@
-import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { SITE_NAME } from '@/utils/constants'
 import { BookOpen, Heart } from 'lucide-react'
+import { SEOHead } from '@/components/ui/SEOHead'
 
 export default function About() {
   return (
     <>
-      <Helmet>
-        <title>About — {SITE_NAME}</title>
-        <meta name="description" content="About Iron Heist, the poet behind these nine free collections." />
-      </Helmet>
+      <SEOHead
+        title="About Iron Heist"
+        description="Iron Heist is the poet behind Iron Verse — nine free poetry collections about grief, love, longing, and the ordinary ache of being alive."
+        path="/about"
+        keywords={['Iron Heist', 'about the poet', 'poetry author', 'Iron Verse poet']}
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Person',
+          name: 'Iron Heist',
+          url: 'https://iron-verse-poetry.vercel.app/about',
+          description: 'Poet behind Iron Verse — nine free collections about grief, longing, desire, and clarity.',
+          sameAs: [
+            'https://www.instagram.com/ironheistpoetry',
+            'https://www.wattpad.com/user/ironheist',
+          ],
+        }}
+      />
 
       <div className="max-w-3xl mx-auto px-6 pt-16 pb-24">
         {/* Hero text */}

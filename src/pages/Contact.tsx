@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -8,8 +7,8 @@ import { contactService } from '@/services/newsletter.service'
 import { Input } from '@/components/ui/Input'
 import { Textarea } from '@/components/ui/Textarea'
 import { Button } from '@/components/ui/Button'
-import { SITE_NAME } from '@/utils/constants'
 import { Check, Mail } from 'lucide-react'
+import { SEOHead } from '@/components/ui/SEOHead'
 
 const schema = z.object({
   name: z.string().min(2, 'Name is required').max(200),
@@ -37,9 +36,11 @@ export default function Contact() {
 
   return (
     <>
-      <Helmet>
-        <title>Contact — {SITE_NAME}</title>
-      </Helmet>
+      <SEOHead
+        title="Contact"
+        description="Get in touch with Iron Heist. If a poem hit close to home, or you just want to say something — this is the place."
+        path="/contact"
+      />
 
       <div className="max-w-2xl mx-auto px-6 pt-16 pb-24">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>

@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Helmet } from 'react-helmet-async'
 import { useSearchParams } from 'react-router-dom'
 import { useBlogPosts } from '@/hooks/useBlogPosts'
 import { BlogCard } from '@/components/blog/BlogCard'
@@ -7,7 +6,8 @@ import { BlogSidebar } from '@/components/blog/BlogSidebar'
 import { BlogCardSkeleton } from '@/components/ui/SkeletonLoader'
 import { Pagination } from '@/components/ui/Pagination'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
-import { SITE_NAME, POSTS_PER_PAGE } from '@/utils/constants'
+import { POSTS_PER_PAGE } from '@/utils/constants'
+import { SEOHead } from '@/components/ui/SEOHead'
 
 export default function Blog() {
   const [searchParams] = useSearchParams()
@@ -28,10 +28,12 @@ export default function Blog() {
 
   return (
     <>
-      <Helmet>
-        <title>Blog — {SITE_NAME}</title>
-        <meta name="description" content="Writing about the process, the work, and the world the poems come from." />
-      </Helmet>
+      <SEOHead
+        title="Blog"
+        description="Writing about the process, the work, and the world the poems come from. Thoughts on grief, creativity, and what poetry is actually for."
+        path="/blog"
+        keywords={['poetry blog', 'Iron Heist blog', 'writing about poetry', 'poet thoughts']}
+      />
 
       <div className="max-w-7xl mx-auto px-6 pt-10 pb-20">
         <Breadcrumbs items={[{ label: 'Blog', href: '/blog' }]} />
