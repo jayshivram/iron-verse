@@ -6,16 +6,29 @@ import { DownloadButton } from '@/components/books/DownloadButton'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { PageLoader } from '@/components/ui/LoadingSpinner'
 import { formatCount } from '@/utils/formatters'
-import { Eye, Download, BookOpen, Tag, Quote } from 'lucide-react'
+import { Eye, Download, BookOpen, Tag, Quote, Share2 } from 'lucide-react'
 import { booksService } from '@/services/books.service'
-import { useEffect } from 'react'
-import { BOOK_QUOTES } from '@/data/quotes.static'
+import { useEffect, useState } from 'react'
+import { BOOK_QUOTES, BookQuote } from '@/data/quotes.static'
 import { SEOHead } from '@/components/ui/SEOHead'
+import { QuoteCardGenerator, QuoteCardPayload } from '@/components/ui/QuoteCardGenerator'
 
 export default function BookDetail() {
   const { slug } = useParams<{ slug: string }>()
   const { data: book, isLoading, isError } = useBook(slug!)
   const bookQuotes = BOOK_QUOTES.filter((q) => q.bookSlug === slug)
+  const [qcgOpen, setQcgOpen] = useState(false)
+  const [qcgPayload, setQcgPayload] = useState<QuoteCardPayload | null>(null)
+
+  function openQuoteCard(q: BookQuote) {
+    setQcgPayload({
+      quote: q.text,
+      source: q.poem,
+      author: 'Iron Heist',
+      bookTitle: q.bookTitle,
+    })
+    setQcgOpen(true)
+  }
 
   useEffect(() => {
     if (book) {
@@ -167,12 +180,25 @@ export default function BookDetail() {
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.15 + i * 0.08, duration: 0.4 }}
-                      className="border-l-2 border-amber-500/40 pl-4 py-1"
+                      className="group relative border-l-2 border-amber-500/40 pl-4 py-1"
                     >
                       <p className="font-serif italic text-ink-200 leading-relaxed mb-1">
                         "{q.text}"
                       </p>
-                      <footer className="text-xs text-ink-500 font-sans">— {q.poem}</footer>
+                      <div className="flex items-center justify-between">
+                        <footer className="text-xs text-ink-500 font-sans">— {q.poem}</footer>
+                        <button
+                          onClick={() => openQuoteCard(q)}
+                          title="Share as image"
+                          aria-label="Share this quote as an image"
+                          className="flex items-center gap-1.5 text-xs text-ink-600 hover:text-amber-400
+                                     transition-colors duration-200 font-sans py-1 px-2 rounded
+                                     hover:bg-amber-900/20 opacity-0 group-hover:opacity-100"
+                        >
+                          <Share2 size={12} />
+                          Share
+                        </button>
+                      </div>
                     </motion.blockquote>
                   ))}
                 </div>
@@ -181,6 +207,14 @@ export default function BookDetail() {
           </motion.div>
         </div>
       </div>
+
+      {qcgPayload && (
+        <QuoteCardGenerator
+          isOpen={qcgOpen}
+          onClose={() => setQcgOpen(false)}
+          initial={qcgPayload}
+        />
+      )}
     </>
   )
 }

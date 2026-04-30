@@ -9,15 +9,28 @@ import { ReadingProgressBar } from '@/components/blog/ReadingProgressBar'
 import { BlogSidebar } from '@/components/blog/BlogSidebar'
 import { formatDate, formatReadingTime } from '@/utils/formatters'
 import { blogService } from '@/services/blog.service'
-import { useEffect } from 'react'
-import { Clock, Calendar, Eye } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Clock, Calendar, Eye, Image as ImageIcon } from 'lucide-react'
 import { formatCount } from '@/utils/formatters'
 import { SEOHead } from '@/components/ui/SEOHead'
+import { QuoteCardGenerator, QuoteCardPayload } from '@/components/ui/QuoteCardGenerator'
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>()
   const { data: post, isLoading, isError } = useBlogPost(slug!)
   const { data: related = [] } = useRelatedPosts(post?.id || '', post?.tags || [])
+  const [qcgOpen, setQcgOpen] = useState(false)
+  const [qcgPayload, setQcgPayload] = useState<QuoteCardPayload | null>(null)
+
+  function openQuoteCard() {
+    if (!post) return
+    setQcgPayload({
+      quote: post.excerpt || '',
+      source: post.title,
+      author: 'Iron Heist',
+    })
+    setQcgOpen(true)
+  }
 
   useEffect(() => {
     if (post) {
@@ -145,8 +158,19 @@ export default function BlogPost() {
             )}
 
             {/* Share */}
-            <div className="mt-8">
+            <div className="mt-8 flex flex-wrap items-center gap-4">
               <ShareButtons url={currentUrl} title={post.title} />
+              <button
+                onClick={openQuoteCard}
+                className="flex items-center gap-2 text-xs font-sans text-ink-400
+                           hover:text-amber-400 transition-colors duration-200
+                           border border-ink-700 hover:border-amber-700/50
+                           px-3 py-1.5 rounded-full"
+                aria-label="Generate a shareable quote image"
+              >
+                <ImageIcon size={13} />
+                Share Quote
+              </button>
             </div>
 
             {/* Comments */}
@@ -160,6 +184,14 @@ export default function BlogPost() {
           <BlogSidebar activeCategory={post.category || undefined} />
         </div>
       </div>
+
+      {qcgPayload && (
+        <QuoteCardGenerator
+          isOpen={qcgOpen}
+          onClose={() => setQcgOpen(false)}
+          initial={qcgPayload}
+        />
+      )}
     </>
   )
 }
